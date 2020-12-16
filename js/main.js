@@ -7,38 +7,31 @@ let texts = {
   pb: "<img class=\"picture\" src=\"img/pb.png\" alt=\"Princess Bubblegum\">Princess Bonnibel Bubblegum (also called Bonnie or PB, occasionally P-bubs),[4][5][6] is a fictional character in the American animated television series Adventure Time, created by Pendleton Ward. She is voiced by Hynden Walch.\nPrincess Bubblegum is a \"Gum Golem\", a being composed of both human and candy DNA, and rules the Candy Kingdom, which is inhabited by other \"Candy People\". She is good friends with the series' protagonists Finn the Human and Jake the Dog, first appearing with them in Ward's 2008 pilot.\nBubblegum is typically very kind and compassionate, having a strong sense of justice, though she shows a dark side when provoked. She is highly intelligent, being responsible for the creation of the Candy People as well as various devices including a miniature time machine. She is fluent in German and Korean, using the latter language to communicate with her friend Lady Rainicorn. Bubblegum is skeptical of magic, refusing to acknowledge it as anything other than “scientific principles presented like mystical hoodoo”.\nBubblegum is highly protective of the Candy People and cares deeply for their safety, but is secretly strained by the pressures of ruling and expresses a desire for freedom. Following a near-death experience at the end of the second season, she starts to isolate herself and becomes overprotective of the Candy People, even exhibiting authoritarian tendencies temporarily in the fifth season. At the end of the sixth season, Bubblegum is deposed as ruler following an election, where she realizes she has made the Candy People too unintelligent. Following the miniseries Stakes, Bubblegum is reinstated as ruler and becomes less overprotective."
 }
 
-let currentTab;
-let mainElem;
-let toggler;
-
-let changeText = (text, event) => {
-  if (event.target.id !== '') {
-    if (event.target.id !== currentTab.id) {
-      console.log('test')
-      currentTab.classList.toggle('focused')
-      mainElem.innerHTML = texts[event.target.id]
-      currentTab = document.querySelector("#" + event.target.id)
-      currentTab.classList.toggle('focused')
-      document.querySelector('aside').classList.toggle('toggled')
-    }
-  }
-  event.target.blur()
-}
-
-function mainFunc() {
-  currentTab = document.querySelector('#about')
-  mainElem = document.querySelector('main')
-  toggler = document.querySelector('.toggle')
+document.addEventListener('DOMContentLoaded', () => {
+  let currentTab = document.querySelector('#about')
+  const mainElem = document.querySelector('main')
+  const toggler = document.querySelector('.toggle')
 
   mainElem.innerHTML = texts['about']
 
   let menu = document.querySelector('.main-navigation')
-  menu.addEventListener('click', (event) => { changeText('test', event) })
+  menu.addEventListener('click', (event) => { changeText(event) })
   menu.addEventListener('mouseDown', (event) => { event.preventDefault() })
 
-  toggler.addEventListener('click', (event) => {
+  toggler.addEventListener('click', () => {
     document.querySelector('aside').classList.toggle('toggled')
   })
-}
 
-document.addEventListener('DOMContentLoaded', mainFunc)
+  let changeText = ({ target }) => {
+    if (target.id !== '') {
+      if (target.id !== currentTab.id) {
+        currentTab.classList.toggle('focused')
+        mainElem.innerHTML = texts[target.id]
+        currentTab = document.querySelector("#" + target.id)
+        currentTab.classList.toggle('focused')
+        document.querySelector('aside').classList.toggle('toggled')
+      }
+    }
+    target.blur()
+  }
+})
