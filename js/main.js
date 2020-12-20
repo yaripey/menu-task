@@ -47,8 +47,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Function for changing text in main
   const changeText = (textPart) => {
-
     const currentMain = document.querySelector('main');
+
     if (currentMain.classList[0] !== textPart) { // if this page isn't open already
       const newElem = document.createElement('main')
       newElem.setAttribute('class', textPart)
@@ -68,6 +68,17 @@ document.addEventListener('DOMContentLoaded', () => {
       newElem.appendChild(newImage)
       newElem.appendChild(newText)
       currentMain.parentNode.replaceChild(newElem, currentMain)
+
+      // Changing styles of the corresponding button
+      const currentButton = document.querySelector('.focused')
+      currentButton.classList.toggle('focused')
+      const newCurrentButton = document.querySelector(`#${textPart}`)
+      newCurrentButton.classList.toggle('focused')
+
+      // For mobile, closing the menu after button tap
+      if (document.querySelector('aside').classList.contains('toggled')) {
+        document.querySelector('aside').classList.toggle('toggled')
+      }
     }
   }
 
@@ -75,15 +86,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const handleChangeText = ({ target }) => {
     if (target.id) { // only if user hit the button
       changeText(target.id)
+
     }
   }
 
-  changeText('about')
-
-  let menu = document.querySelector('.main-navigation')
+  const menu = document.querySelector('.main-navigation')
   menu.addEventListener('click', handleChangeText)
 
   toggler.addEventListener('click', () => {
     document.querySelector('aside').classList.toggle('toggled')
   })
+
+  changeText('about')
 })
