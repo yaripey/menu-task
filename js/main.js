@@ -50,24 +50,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const currentMain = document.querySelector('main');
 
     if (currentMain.classList[0] !== target.id) { // if this page isn't open already
-      const newElem = document.createElement('main')
-      newElem.setAttribute('class', target.id)
 
-      const newImage = document.createElement('img')
-      newImage.setAttribute('src', texts[target.id].img)
-      newImage.setAttribute('class', 'picture')
-
-      const newText = document.createDocumentFragment()
+      const newText = []
       texts[target.id].text.forEach(text => {
-        const anotherP = document.createElement('p')
-        anotherP.textContent = text
-        newText.appendChild(anotherP)
-        newText.appendChild(document.createElement('br'))
+        newText.push(`<p>${text}</p>`)
       })
-
-      newElem.appendChild(newImage)
-      newElem.appendChild(newText)
-      currentMain.parentNode.replaceChild(newElem, currentMain)
+      currentMain.innerHTML = `
+        <main class="${target.id}">
+          <img class="picture" src="${texts[target.id].img}">
+          ${newText.join('\n')}
+        </main>
+      `
 
       // Changing styles of the corresponding button
       const currentButton = document.querySelector('.focused')
