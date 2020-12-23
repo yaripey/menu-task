@@ -46,19 +46,19 @@ document.addEventListener('DOMContentLoaded', () => {
   const toggler = document.querySelector('.toggle')
 
   // Function for changing text in main
-  const changeText = (textPart) => {
+  const changeText = (target) => {
     const currentMain = document.querySelector('main');
 
-    if (currentMain.classList[0] !== textPart) { // if this page isn't open already
+    if (currentMain.classList[0] !== target.id) { // if this page isn't open already
       const newElem = document.createElement('main')
-      newElem.setAttribute('class', textPart)
+      newElem.setAttribute('class', target.id)
 
       const newImage = document.createElement('img')
-      newImage.setAttribute('src', texts[textPart].img)
+      newImage.setAttribute('src', texts[target.id].img)
       newImage.setAttribute('class', 'picture')
 
       const newText = document.createDocumentFragment()
-      texts[textPart].text.forEach(text => {
+      texts[target.id].text.forEach(text => {
         const anotherP = document.createElement('p')
         anotherP.textContent = text
         newText.appendChild(anotherP)
@@ -72,8 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Changing styles of the corresponding button
       const currentButton = document.querySelector('.focused')
       currentButton.classList.toggle('focused')
-      const newCurrentButton = document.querySelector(`#${textPart}`)
-      newCurrentButton.classList.toggle('focused')
+      target.classList.toggle('focused')
 
       // For mobile, closing the menu after button tap
       if (document.querySelector('aside').classList.contains('toggled')) {
@@ -85,8 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Function for handling the menu button click
   const handleChangeText = ({ target }) => {
     if (target.id) { // only if user hit the button
-      changeText(target.id)
-
+      changeText(target)
     }
   }
 
@@ -97,5 +95,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('aside').classList.toggle('toggled')
   })
 
-  changeText('about')
+  // This imitates click for the content on page when first opened.
+  document.querySelector('#about').click()
 })
