@@ -51,15 +51,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (currentMain.classList[0] !== target.id) { // if this page isn't open already
 
-      const newText = []
-      texts[target.id].text.forEach(text => {
-        newText.push(`<p>${text}</p>`)
-      })
+      const newText = texts[target.id].text.map(paragraph => `<p>${[paragraph]}</p>`)
       currentMain.innerHTML = `
-        <main class="${target.id}">
           <img class="picture" src="${texts[target.id].img}">
           ${newText.join('\n')}
-        </main>
       `
 
       // Changing styles of the corresponding button
