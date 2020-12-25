@@ -48,22 +48,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const changeText = (target) => {
     const currentMain = document.querySelector('main');
 
-    if (currentMain.classList[0] !== target.id) {
-
-      const newText = texts[target.id].text.map(paragraph => `<p>${[paragraph]}</p>`)
-      currentMain.innerHTML = `
+    const newText = texts[target.id].text.map(paragraph => `<p>${[paragraph]}</p>`)
+    currentMain.innerHTML = `
           <img class="picture" src="${texts[target.id].img}">
           ${newText.join('\n')}
       `
+    const currentButton = document.querySelector('.focused')
+    currentButton.classList.toggle('focused')
+    target.classList.toggle('focused')
 
-      const currentButton = document.querySelector('.focused')
-      currentButton.classList.toggle('focused')
-      target.classList.toggle('focused')
-
-      if (document.querySelector('aside').classList.contains('toggled')) {
-        document.querySelector('aside').classList.toggle('toggled')
-      }
-    }
+    document.querySelector('aside').classList.remove('toggled')
   }
 
   const handleChangeText = ({ target }) => {
